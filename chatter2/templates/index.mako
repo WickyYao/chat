@@ -11,7 +11,7 @@
   </head>
   <body>
   <div id="container">
-    <h1>Lovely House!</h1>
+    <h1>Chat with you!</h1>
     <div id="chatlog"></div><br />
     <form id="chat_form">
       <input type="text" id="chatbox"></input>

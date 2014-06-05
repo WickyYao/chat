@@ -2,7 +2,13 @@ from socketio.namespace import BaseNamespace
 from socketio import socketio_manage
 from socketio.mixins import BroadcastMixin
 
-from datetime import datetime as dt
+from pymongo import MongoClient
+import pymongo
+client = MongoClient()
+db = client.chat
+chat_history = db.chat_history
+
+from datetime import timedelta, datetime as dt
 import pytz
 
 
@@ -45,11 +51,21 @@ class NamedUsersRoomsMixin(BroadcastMixin):
 
 class ChatNamespace(BaseNamespace, NamedUsersRoomsMixin):
     def on_chat(self, msg):
-        time = dt.strftime(dt.now(pytz.timezone("Asia/Shanghai")),'%H:%M:%S')
+        raw_time = dt.now(pytz.timezone("Asia/Shanghai"))
+        time = dt.strftime(raw_time,'%H:%M:%S')
+
+        chat_data = {'time':raw_time, 'msg':msg}
+        chat_data_id = chat_history.insert(chat_data)
+
         self.broadcast_event('chat', time, msg)
 
     def recv_connect(self):
-        self.broadcast_event('user_connect')
+        chat_result = list(chat_history.find().sort([("time", pymongo.DESCENDING)]).limit(10))
+        chat_list = []
+        for row in chat_result:
+            time = row['time'] + timedelta(hours=8)
+            chat_list = [{'time':dt.strftime(time,'%H:%M:%S'), 'msg':row['msg']}]+chat_list
+        self.broadcast_event('user_connect',chat_list)
 
     def recv_disconnect(self):
         self.broadcast_event('user_disconnect')

@@ -19,8 +19,12 @@ $(document).ready(function() {
         $("#chatlog").append("user disconnected" + "<br />");
     });
 
-    socket.on("user_connect", function() {
+    socket.on("user_connect", function(chat_list) {
         $("#chatlog").append("user connected" + "<br />");
+        for (i=0;i<chat_list.length;i++){
+            $("#chatlog").append(chat_list[i].time + ' - ' + chat_list[i].msg + "<br />");
+        }
+        $("#chatlog").stop().animate({scrollTop:$("#chatlog")[0].scrollHeight},1000)
     });
 
     socket.on("writing", function(val) {
