@@ -10,8 +10,8 @@ $(document).ready(function() {
     });
 
     // Listen for the event "chat" and add the content to the log
-    socket.on("chat", function(time, msg) {
-        $("#chatlog").append(time + ' - ' + msg + "<br />");
+    socket.on("chat", function(time, msg, nickname, textcolor) {
+        $("#chatlog").append("<a style='color:" + textcolor + "'>" + nickname + ' - ' + time + ' - ' + msg + "</a>" + "<br />");
         $("#chatlog").stop().animate({scrollTop:$("#chatlog")[0].scrollHeight},1000)
     });
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
     socket.on("user_connect", function(chat_list) {
         $("#chatlog").append("user connected" + "<br />");
         for (i=0;i<chat_list.length;i++){
-            $("#chatlog").append(chat_list[i].time + ' - ' + chat_list[i].msg + "<br />");
+            $("#chatlog").append("<a style='color:" + chat_list[i].textcolor + "'>" + chat_list[i].nickname + ' - ' + chat_list[i].time + ' - ' + chat_list[i].msg + "</a>" + "<br />");
         }
         $("#chatlog").stop().animate({scrollTop:$("#chatlog")[0].scrollHeight},1000)
     });
@@ -42,10 +42,11 @@ $(document).ready(function() {
         e.preventDefault();
 
         var val = $("#chatbox").val();
+        var user_id = $("#user_id").val()
 
         // send out the "chat" event with the textbox as the only argument
         if (val){
-            socket.emit("chat", val);
+            socket.emit("chat", val, user_id);
 
             $("#chatbox").val("");
             socket.emit('writing', '')

@@ -3,6 +3,10 @@ from pyramid.config import Configurator
 from chatter2.views import socketio_service
 from chatter2.views import index
 
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+from .security import groupfinder
+
 
 def simple_route(config, name, url, fn):
     """
@@ -16,16 +20,29 @@ def simple_route(config, name, url, fn):
 
 
 def main(global_config, **settings):
-    config = Configurator()
+    authn_policy = AuthTktAuthenticationPolicy(
+        'sosecret', callback=groupfinder, hashalg='sha512')
+    authz_policy = ACLAuthorizationPolicy()
+
+    config = Configurator(settings=settings,
+                          root_factory='.security.RootFactory')
+
+    config.set_authentication_policy(authn_policy)
+    config.set_authorization_policy(authz_policy)
 
     config.include('pyramid_mako')
 
-    simple_route(config, 'index', '/', index)
+    ##simple_route(config, 'index', '/', index)
+    config.add_route('index', '/')
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
 
     # The socketio view configuration
     simple_route(config, 'socket_io', 'socket.io/*remaining', socketio_service)
 
     config.add_static_view('static', 'static', cache_max_age=3600)
+
+    config.scan()
 
     app = config.make_wsgi_app()
 
