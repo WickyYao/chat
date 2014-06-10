@@ -66,3 +66,18 @@ $(document).ready(function() {
         socket.emit('writing', val)
     })
 });
+
+function validate_form(prefix) {
+    var username = document.getElementById(prefix+'_username').value
+    var password = document.getElementById(prefix+'_password').value
+  
+    if (username == null || username == "") {
+        alert("user name must be filled out");
+        return false;
+    }
+
+    if (password == null || password == "") {
+        alert("password must be filled out");
+        return false;
+    }
+}

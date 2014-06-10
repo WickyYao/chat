@@ -40,7 +40,7 @@
           <button type="submit" id="submit">Send</button>
         </form>
     %else:
-        <form id="login_form" method="post">
+        <form id="login_form" method="post" onsubmit="return validate_form('l')">
           <a style="margin-right:10px">login:</a>
           <input type="text" id="l_username" name='l_username' placeholder="user name">
           <input type="password" id="l_password" name='l_password' placeholder="password">
@@ -49,7 +49,7 @@
           <a>or <a id='signup' href="javascript:void(0)" onclick="document.getElementById('login_form').style.display='none';document.getElementById('signup_form').style.display='';">signup</a></a>
         </form>
     %endif
-        <form id="signup_form" method="post" style="display:none">
+        <form id="signup_form" method="post" style="display:none" onsubmit="return validate_form('s')">
           <a style="margin-right:10px">signup:</a>
           <input type="text" id="s_username" name='s_username' placeholder="user name">
           <input type="password" id="s_password" name='s_password' placeholder="password">
