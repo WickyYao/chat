@@ -36,8 +36,8 @@
     <div id="chatlog"></div><br />
     %if login_flag:
         <form id="chat_form">
-            <input type="text" id="chatbox"></input>
-            <button type="submit" id="submit">Send</button>
+          <input type="text" id="chatbox"></input>
+          <button type="submit" id="submit">Send</button>
         </form>
     %else:
         <form id="login_form" method="post" onsubmit="return validate_form('l')">
