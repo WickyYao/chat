@@ -8,8 +8,44 @@
     <script src="/static/backbone.js" type="text/javascript"></script>
     <script src="/static/chatter.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+
+    <script src="/static/lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" />
+    <style>
+      body { 
+        background: url('/static/img/bg_pic.jpg') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+    </style>
   </head>
   <body>
+    <!-- Navbar
+    ================================================== -->
+    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px">
+      <div class="container-fluid" style="margin-left:10%;margin-right:2%">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">ChatChat</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+          <ul class="nav navbar-nav" style="float:right">
+            <li><a href="#">Settings</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  <!-- nav end -->
   <input type="hidden" id="user_id" value="${user_data.get('_id')}">
   %if login_flag:
     <form id="user_data_form" method="post">
@@ -30,10 +66,14 @@
       </div>
     </form>
   %endif
-
-  <div id="container">
-    <h1>Chat with you!</h1>
-    <div id="chatlog"></div><br />
+  <div class="panel panel-default" style="border-radius:10px;width:700px;height:80%;margin-left:auto;margin-right:auto;-webkit-box-shadow: 0px 0px 22px 1px rgba(0,0,0,0.77);
+-moz-box-shadow: 0px 0px 22px 1px rgba(0,0,0,0.77);
+box-shadow: 0px 0px 22px 1px rgba(0,0,0,0.77);">
+    <div class="panel-heading" style="border-radius:10px 10px 0 0">
+      <h3 class="panel-title">Chat Box</h3>
+    </div>
+    <div class="panel-body" id="chatlog" style="height:80%">
+    </div>
     %if login_flag:
         <form id="chat_form">
           <input type="text" id="chatbox"></input>
@@ -61,3 +101,4 @@
   </div>
   </body>
 </html>
+
