@@ -1,45 +1,95 @@
 <%inherit file="base.mako"/>
 ##<div style="height:400px;width:200px;margin:150px auto;border-radius:10px;background-color:white;">
 <div style="height:400px;width:200px;margin:150px auto auto auto;">
-  <button type="button" onmouseover="this.style.backgroundColor='#ff5f00'" onmouseout="this.style.backgroundColor='#ff9f00'" class="btn btn-primary btn-lg btn-block" style="border-color:#e65600;margin-bottom:20px;width:200px;background-color:#ff9f00">
+  <button type="button" onclick="signup()" onmouseover="this.style.backgroundColor='#ff5f00'" onmouseout="this.style.backgroundColor='#ff9f00'" class="btn btn-primary btn-lg btn-block" style="border-color:#e65600;margin-bottom:20px;width:200px;background-color:#ff9f00">
     Signup
   </button>
-  <input type="email" id="l_username" class="form-control input-lg" placeholder="Enter username">
-  <input type="password" id="l_password" class="form-control input-lg" placeholder="Enter password" style="margin-top:20px">
-  <button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:20px;width:200px">
+  <input type="email" id="username" class="form-control input-lg" onkeyup="change_username(this)" placeholder="Enter username">
+  <input type="password" id="password" class="form-control input-lg" onkeyup="change_password(this)" placeholder="Enter password" style="margin-top:20px">
+  <button type="button" onclick="username_popover('user name is empty')" class="btn btn-primary btn-lg btn-block" style="margin-top:20px;width:200px">
     Login
   </button>
-  ##<h4 style="color:#ff6633">
-  ##  Don't have an account?
-  ##  <span class="glyphicon glyphicon-circle-arrow-right" style=";float:right;margin-left:10px"></span>
-  ##  <span class="label label-default" style="background-color:#ff6633;float:right">Signup</span>
-  ##</h4>
 
-  ##<div style="margin:30px auto;text-align:center;font-weight:bold;color:#ff9f00">OR</div>
-  ##<div class="circle" onclick="';">
-  ##  Signup!
-  ##</div>
-</div>
+<script>
+  function username_popover(content){
+    $('#username').data('bs.popover').options.content = content;
+    $('#username').popover('show')
+  };
+
+  function password_popover(content){
+    $('#password').data('bs.popover').options.content = content;
+    $('#password').popover('show')
+  };
+
+  function change_username(dom){
+    if (dom.value != ''){
+      $('#username').popover('hide')
+    }
+    else{
+      $('#username').data('bs.popover').options.content = 'user name is empty';
+      $('#username').popover('show')
+    }
+  }
+
+  function change_password(dom){
+    if (dom.value != ''){
+      $('#password').popover('hide')
+    }
+    else{
+      $('#password').data('bs.popover').options.content = 'password is empty';
+      $('#password').popover('show')
+    }
+  }
+
+  function signup(){
+    username = $('#username').val()
+    password = $('#password').val()
+    if (!username){
+      username_popover('username is empty')
+    }
+
+    if (!password){
+      password_popover('password is empty')
+    }
+
+    if (!username | !password){
+      return
+    }
+    alert(1)
+  }
+
+$(function ()  
+{
+  $('#username').popover(
+  {
+     trigger: 'hover',
+     html: true,
+     placement: 'right',
+     trigger: 'manual',
+  });
+
+  $('#password').popover(
+  {
+     trigger: 'hover',
+     html: true,
+     placement: 'right',
+     trigger: 'manual',
+  });
+});
+</script>
 
 <style>
-.circle
-{
-width: 100px;
-height: 100px;
-margin:auto;
-background-color: #ff9f00;
-border-radius: 50%;
-padding: 5px;
-text-align: center;
-line-height: 90px;
-color: white;
-font-family: arial, serif;
-font-size: 20px;
-cursor:pointer;
-}
-
-.circle:hover
-{
-background-color: #ff5f00;
-}
+  .popover {
+    border-color: #ff063e;
+    background-color: #ff2052;
+    color:white;
+  }
+  
+  .popover.right>.arrow:after{
+    border-right-color: #ff2052;
+  }
+  
+  .popover.right>.arrow{
+    border-right-color: #ff063e;
+  }
 </style>
