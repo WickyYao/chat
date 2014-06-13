@@ -7,7 +7,7 @@
     <script src="/static/underscore.js" type="text/javascript"></script>
     <script src="/static/backbone.js" type="text/javascript"></script>
     <script src="/static/chatter.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+    ##<link rel="stylesheet" type="text/css" href="/static/styles.css" />
 
     <script src="/static/lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" />

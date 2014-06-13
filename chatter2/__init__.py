@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from pyramid.config import Configurator
 from chatter2.views import socketio_service
-from chatter2.views import index
 
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -33,7 +32,7 @@ def main(global_config, **settings):
     config.include('pyramid_mako')
 
     ##simple_route(config, 'index', '/', index)
-    config.add_route('index', '/')
+    config.add_route('public_room', '/')
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
 

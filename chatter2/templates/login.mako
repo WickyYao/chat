@@ -6,7 +6,7 @@
   </button>
   <input type="email" id="username" class="form-control input-lg" onkeyup="change_username(this)" placeholder="Enter username">
   <input type="password" id="password" class="form-control input-lg" onkeyup="change_password(this)" placeholder="Enter password" style="margin-top:20px">
-  <button type="button" onclick="username_popover('user name is empty')" class="btn btn-primary btn-lg btn-block" style="margin-top:20px;width:200px">
+  <button type="button" onclick="login()" class="btn btn-primary btn-lg btn-block" style="margin-top:20px;width:200px">
     Login
   </button>
 
@@ -51,11 +51,69 @@
     if (!password){
       password_popover('password is empty')
     }
+    else if (password.length<=5){
+      password_popover('at least 6 digits')
+      return
+    }
 
     if (!username | !password){
       return
     }
-    alert(1)
+
+    $.ajax({
+        type: "POST",
+        url: "/login",
+        cache: true,
+        data: {
+            ajax: 1,
+            signup: 1,
+            username: username,
+            password: password,
+        },
+    }).done(function (data) {
+         if (data==false){
+           username_popover('username has existed')
+         }
+         else{
+           window.location.href = "/";
+         }
+       })
+  }
+
+  function login(){
+    username = $('#username').val()
+    password = $('#password').val()
+    if (!username){
+      username_popover('username is empty')
+    }
+
+    if (!password){
+      password_popover('password is empty')
+    }
+
+    if (!username | !password){
+      return
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/login",
+        cache: true,
+        data: {
+            ajax: 1,
+            login: 1,
+            username: username,
+            password: password,
+        },
+    }).done(function (data) {
+         if (data==false){
+           username_popover('user name or password is not correct')
+         }
+         else{
+           window.location.href = "/";
+         }
+       })
+
   }
 
 $(function ()  

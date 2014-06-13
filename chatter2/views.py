@@ -18,10 +18,10 @@ user = db.user
 from datetime import timedelta, datetime as dt
 import pytz
 
-@view_config(route_name='index',
-             renderer='templates/index.mako',
+@view_config(route_name='public_room',
+             renderer='templates/public_room.mako',
              permission='view')
-def index(request):
+def public_room(request):
     if authenticated_userid(request):
         login_flag = 1
         user_id = authenticated_userid(request)
@@ -33,25 +33,6 @@ def index(request):
         user_data = {}
         ##headers = remember(request, 10)
         ##return HTTPFound(location='/login', headers=headers)
-    if request.POST.get('s_username'):
-        username = request.POST.get('s_username')
-        password = request.POST.get('s_password')
-
-        user_data = {'username':username, 'password':password,\
-                'nickname':username, 'textcolor':'#000000'}
-        user_id = user.insert(user_data)
-        headers = remember(request, str(user_id))
-        return HTTPFound(location=request.url, headers=headers)
-    if request.POST.get('l_username'):
-        username = request.POST.get('l_username')
-        password = request.POST.get('l_password')
-
-        user_data = user.find_one({"username":username})
-        if user_data and user_data['password'] == password:
-            user_id = user_data['_id']
-            headers = remember(request, str(user_id))
-            return HTTPFound(location=request.url, headers=headers)
-        user_data['_id'] = str(user_data['_id'])
 
     if request.POST.get('e_nickname'):
         user_id = request.POST.get('e_user_id')
@@ -69,16 +50,50 @@ def index(request):
 @view_config(route_name='logout')
 def logout(request):
     headers = forget(request)
-    return HTTPFound(location = request.route_url('index'),
+    return HTTPFound(location = request.route_url('login'),
                      headers = headers)
 
 @view_config(route_name='login',
              renderer='templates/login.mako',
              permission='view')
 def login(request):
-    print authenticated_userid(request)
+    if authenticated_userid(request):
+        return HTTPFound(location= request.route_url('public_room'))
+
     return {}
 
+@view_config(route_name='login',
+             request_param='ajax',
+             renderer='json',
+             permission='view')
+def login_ajax(request):
+    if request.POST.get('login'):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user_data = user.find_one({"username":username})
+        if user_data and user_data['password'] == password:
+            user_id = user_data['_id']
+            headers = remember(request, str(user_id))
+            return HTTPFound(location=request.route_url('public_room'),
+                             headers=headers)
+        else:
+            return False
+
+    if request.POST.get('signup'):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user_data = user.find_one({"username":username})
+        if user_data and user_data['username'] == username:
+            return False
+        else:
+            user_data = {'username':username, 'password':password,\
+                    'nickname':username, 'textcolor':'#000000'}
+            user_id = user.insert(user_data)
+            headers = remember(request, str(user_id))
+            return HTTPFound(location=request.route_url('public_room'),
+                             headers=headers)
 
 class NamedUsersRoomsMixin(BroadcastMixin):
     def __init__(self, *args, **kwargs):
