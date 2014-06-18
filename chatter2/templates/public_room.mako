@@ -23,10 +23,9 @@
     <div class="panel-heading" style="border-radius:10px 10px 0 0">
       <h3 class="panel-title">Public Room</h3>
     </div>
-    <div class="panel-body" id="chatlog" style="height:380px">
+    <div class="panel-body" id="chatlog" style="height:380px;overflow:auto">
     </div>
-    <div style="height:60px;margin-top:20px">
-
+    <div class="panel-footer" style="height:60px;margin-top:20px">
       <div class="col-lg-6" style="width:100%">
       <form id="chat_form">
         <div class="input-group">
@@ -40,3 +39,16 @@
     </div>
     <a id="writing"></a>
 
+<style>
+  .red{
+    width: 90%;
+    word-wrap: break-word;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+    padding: 7px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 5px
+  }
+</style>

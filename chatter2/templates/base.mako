@@ -24,7 +24,7 @@
   <body>
     <!-- Navbar
     ================================================== -->
-    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px">
+    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;position:fixed;width: 100%;top: 0;">
       <div class="container-fluid" style="margin-left:10%;margin-right:2%">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
