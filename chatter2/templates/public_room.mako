@@ -40,8 +40,8 @@
     <a id="writing"></a>
 
 <style>
-  .red{
-    width: 90%;
+  .red-color{
+    max-width: 90%;
     word-wrap: break-word;
     background-color: #f2dede;
     border-color: #ebccd1;
@@ -49,6 +49,7 @@
     padding: 7px;
     border: 1px solid transparent;
     border-radius: 4px;
-    margin-bottom: 5px
+    margin-bottom: 10px;
+    display:inline-block;
   }
 </style>
