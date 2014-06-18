@@ -22,7 +22,8 @@ $(document).ready(function() {
     socket.on("user_connect", function(chat_list) {
         $("#chatlog").append("user connected" + "<br />");
         for (i=0;i<chat_list.length;i++){
-            $("#chatlog").append("<a style='color:" + chat_list[i].textcolor + "'>" + chat_list[i].nickname + ' - ' + chat_list[i].time + ' - ' + chat_list[i].msg + "</a>" + "<br />");
+            //$("#chatlog").append("<a style='color:" + chat_list[i].textcolor + "'>" + chat_list[i].nickname + ' - ' + chat_list[i].time + ' - ' + chat_list[i].msg + "</a>" + "<br />");
+            $("#chatlog").append("<div class='red'>" + chat_list[i].nickname + ' - ' + chat_list[i].time + ' - ' + chat_list[i].msg + "</div>" + "<br />");
         }
         $("#chatlog").stop().animate({scrollTop:$("#chatlog")[0].scrollHeight},1000)
     });
