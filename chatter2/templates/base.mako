@@ -38,10 +38,12 @@
             <li><a href="#">Link</a></li>
             <li><a href="#">Link</a></li>
           </ul>
+          %if login_flag:
           <ul class="nav navbar-nav" style="float:right">
-            <li><a href="#">Settings</a></li>
+            <li><a href="javascript:void(0)" onclick="$('#myModal').modal('show')">Settings</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
+          %endif
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>

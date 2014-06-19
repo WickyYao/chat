@@ -29,10 +29,10 @@ def public_room(request):
         user_data = user.find_one({"_id":_id})
         user_data['_id'] = str(user_data['_id'])
     else:
-        login_flag = 0
-        user_data = {}
+        ##login_flag = 0
+        ##user_data = {}
         ##headers = remember(request, 10)
-        ##return HTTPFound(location='/login', headers=headers)
+        return HTTPFound(location='/login')
 
     if request.POST.get('e_nickname'):
         user_id = request.POST.get('e_user_id')
@@ -60,7 +60,7 @@ def login(request):
     if authenticated_userid(request):
         return HTTPFound(location= request.route_url('public_room'))
 
-    return {}
+    return {'login_flag':0}
 
 @view_config(route_name='login',
              request_param='ajax',

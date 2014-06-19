@@ -11,7 +11,8 @@ $(document).ready(function() {
 
     // Listen for the event "chat" and add the content to the log
     socket.on("chat", function(time, msg, nickname, textcolor) {
-        $("#chatlog").append("<a style='color:" + textcolor + "'>" + nickname + ' - ' + time + ' - ' + msg + "</a>" + "<br />");
+        //$("#chatlog").append("<a style='color:" + textcolor + "'>" + nickname + ' - ' + time + ' - ' + msg + "</a>" + "<br />");
+        $("#chatlog").append("<img src='/static/img/default_pic.png' class='avatar img-rounded'>"+"<div><div><b>" + nickname + '</b> (' + time + ")</div>" + "<div class='"+textcolor+"'>" + msg + "</div></div>");
         $("#chatlog").stop().animate({scrollTop:$("#chatlog")[0].scrollHeight},1000)
     });
 
@@ -20,17 +21,17 @@ $(document).ready(function() {
     });
 
     socket.on("user_connect", function(chat_list) {
-        $("#chatlog").append("user connected" + "<br />");
+        //$("#chatlog").append("user connected" + "<br />");
         for (i=0;i<chat_list.length;i++){
             //$("#chatlog").append("<a style='color:" + chat_list[i].textcolor + "'>" + chat_list[i].nickname + ' - ' + chat_list[i].time + ' - ' + chat_list[i].msg + "</a>" + "<br />");
-            $("#chatlog").append("<div class='red-color'>" + chat_list[i].nickname + ' - ' + chat_list[i].time + ' - ' + chat_list[i].msg + "</div>" + "<br />");
+            $("#chatlog").append("<img src='/static/img/default_pic.png' class='avatar img-rounded'>"+"<div><div><b>" + chat_list[i].nickname + '</b> (' + chat_list[i].time + ")</div>" + "<div class='"+chat_list[i].textcolor+"'>" + chat_list[i].msg + "</div></div>");
         }
         $("#chatlog").stop().animate({scrollTop:$("#chatlog")[0].scrollHeight},1000)
     });
 
     socket.on("writing", function(val) {
         if (val){
-            document.getElementById('writing').innerHTML = 'Writing... '+val
+            //document.getElementById('writing').innerHTML = 'Writing... '+val
         }
         else{
             document.getElementById('writing').innerHTML = ''
